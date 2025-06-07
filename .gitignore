@@ -28,5 +28,10 @@ Thumbs.db
 npm-debug.log
 yarn-error.log
 
+# ASP.NET Core secrets
+appsettings.Development.json
+appsettings.json
+appsettings.Production.json
 
+Migrations/
 ClientApp/.editorconfig
