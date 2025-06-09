@@ -34,7 +34,7 @@ namespace application.Controllers
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<List<BookingResponce>>(bookings));
+            return Ok(_mapper.Map<IEnumerable<BookingResponce>>(bookings));
         }
 
         [HttpGet("{id}")]
