@@ -1,1 +1,73 @@
-<p>workspace-type-item works!</p>
+<div class="bg-white shadow-md rounded-lg p-4 w-96 h-[600px] flex flex-col justify-between">
+  <div class="h-48 w-full">
+    <img [src]="workspaceType.imageUrl" alt="no"
+         class="rounded-lg object-cover w-full h-full">
+  </div>
+
+  <h3 class="text-2xl font-bold">{{workspaceType.name}}</h3>
+
+  <p class="text-gray-700">{{workspaceType.description}}</p>
+
+  <div>
+    <span class="font-bold">Amenities:</span>
+    <div class="flex flex-wrap gap-2 mt-2">
+      <div *ngFor="let amenity of workspaceType.amenities"
+           class="text-xs bg-gray-200 px-2 py-1 rounded">
+        {{amenity}}
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="workspaceType.name === 'Open Space'; else grouped">
+    <div>
+      <span class="font-bold">Availability:</span>
+      <div>
+          {{ deskCount }} desks available
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #grouped>
+    <div>
+      <span class="font-bold">Capacity options:</span>
+      <span *ngFor="let capacityOption of capacityOptions; let last = last">
+        {{capacityOption.capacity}}<span *ngIf="!last">, </span>
+      </span>
+      <span> people</span>
+    </div>
+    <div>
+      <span class="font-bold">Availability:</span>
+      <div *ngFor="let item of groupedAvailability; let last = last">
+          {{ item.count }} room{{ item.count > 1 ? 's' : '' }} for {{ item.capacity }} {{ item.capacity > 1 ? 'people' : 'person' }}
+      </div>
+    </div>
+  </ng-template>
+
+  <button routerLink="/booking" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg py-2 transition">
+    Book now
+  </button>
+</div>
+<ng-container *ngIf="workspaceType.name === 'Open Space' && booking?.workspaceType.name === 'Open Space'">
+  <div class="bg-green-200 rounded">
+    <div>
+      This place is already booked by you!
+    </div>
+    <div>
+      Desk
+      <span class="font-semibold">
+        {{ booking.startDate | date: "mediumDate"}} - {{booking.endDate | date:'mediumDate'}}
+      </span>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="workspaceType.name != 'Open Space' && booking">
+  <div class="bg-green-200 rounded">
+    <div>
+      This place is already booked by you!
+    </div>
+    <div>
+      Room for {{booking.capacity}} {{ booking.capacity > 1 ? 'people' : 'person' }} 
+      <span class="font-semibold">
+        {{ booking.startDate | date: "mediumDate"}} - {{booking.endDate | date:'mediumDate'}}
+      </span>
+    </div>
+  </div>
+</ng-container>

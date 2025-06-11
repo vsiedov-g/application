@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace application.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/workspaces")]
     [ApiController]
     public class WorkspaceController : Controller
     {
@@ -20,9 +20,18 @@ namespace application.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] int? workspaceTypeId)
         {
+            if (workspaceTypeId != null)
+            {
+                var workspaceType = await _unitOfWork.WorkspaceType.GetAsync(w => w.Id == workspaceTypeId, includeProperties: "Workspaces");
+                if (workspaceType == null)
+                {
+                    return NotFound("Workspace type not found");
+                }
+                return Ok(_mapper.Map<IEnumerable<WorkspaceDto>>(workspaceType.Workspaces));
+            }
             var workspaces = await _unitOfWork.Workspace.GetAllAsync(includeProperties: "WorkspaceType");
             return Ok(_mapper.Map<IEnumerable<WorkspaceDto>>(workspaces));
         }

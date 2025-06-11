@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace application.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bookings")]
     [ApiController]
     public class BookingController : Controller
     {
@@ -26,7 +26,7 @@ namespace application.Controllers
             _bookingService = bookingService;
         }
 
-        [HttpGet("getAll")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var bookings = await _unitOfWork.Booking.GetAllAsync(includeProperties: "Workspace.WorkspaceType");
@@ -48,7 +48,7 @@ namespace application.Controllers
             return Ok(_mapper.Map<BookingResponce>(booking));
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateBooking([FromBody] BookingRequest req)
         {
             if(!ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace application.Controllers
             }
         }
 
-        [HttpPost("update")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateBooking([FromBody] BookingRequest req)
         {
             if(!ModelState.IsValid)

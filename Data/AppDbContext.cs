@@ -19,9 +19,16 @@ namespace application.Data
             base.OnModelCreating(builder);
 
             builder.Entity<WorkspaceType>().HasData(
-                new WorkspaceType { Id = 1, Name = SD.WorkspaceTypes.OpenSpace},
-                new WorkspaceType { Id = 2, Name = SD.WorkspaceTypes.PrivateRoom},
-                new WorkspaceType { Id = 3, Name = SD.WorkspaceTypes.MeetingRoom}
+                new WorkspaceType { Id = 1, Name = SD.WorkspaceTypes.OpenSpace, ImageUrl="/images/open-space/openSpace.jpg",
+                    Description="A vibrant shared are perfect for freelancers or small teams who enjoy a collaborative atmosphere. Choose any available desk and get to work with flexibility and ease"
+                },
+                new WorkspaceType
+                {
+                    Id = 2,
+                    Name = SD.WorkspaceTypes.PrivateRoom,
+                    ImageUrl = "/images/private-room/privateRoom.jpg",
+                    Description = "Ideal for focused work, video calls, or small team huddles. These fully enclosed room offer privacy and come in a variety of sizes to fit your needs"
+                }
             );
             builder.Entity<Workspace>().HasData(
                 new Workspace { Id = 1, Name = "Desk 1", Capacity = 1, WorkspaceTypeId = 1},

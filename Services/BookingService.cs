@@ -65,7 +65,7 @@ namespace application.Services
 
             var bookings = await _unitOfWork.Booking.GetAllAsync(b => workspaceIds.Contains(b.WorkspaceId));
 
-            var overlappingBookings = bookings.Where(b =>
+            var overlappingBookings = bookings.Where(b => (req.Id == 0 || b.Id != req.Id) &&
                 b.EndDate >= req.StartDate && b.StartDate <= req.EndDate &&
                 b.EndTime >= req.StartTime && b.StartTime <= req.EndTime).Select(b => b.WorkspaceId).ToHashSet();
 

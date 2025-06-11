@@ -1,1 +1,118 @@
-<p>booking-page works!</p>
+<div class="p-8 min-h-screen bg-gray-50">
+  <div class="max-w-5xl mx-auto">
+    
+    <ng-container *ngIf="booking$ | async as booking; else createMode">
+      <a routerLink="/my_bookings" class="text-blue-600 font-medium hover:underline">&larr; Go back</a>
+      <h2 class="text-3xl font-bold mt-6 mb-10">Edit Booking </h2>
+    </ng-container>
+    <ng-template #createMode>
+      <a routerLink="/" class="text-blue-600 font-medium hover:underline">&larr; Go back</a>
+      <h2 class="text-3xl font-bold mt-6 mb-10">Create New Booking</h2>
+    </ng-template>
+
+    <div class="bg-white p-6 rounded-2xl shadow">
+      <form [formGroup]="bookingForm" class="grid grid-cols-1 md:grid-cols-2 gap-8" (ngSubmit)="onSubmit()">
+        <div>
+          <h2 class="text-xl font-semibold mb-6">Reservation details</h2>
+
+            <div class="space-y-4">
+
+              <div>
+                <label class="block font-medium mb-1">Name</label>
+                <input formControlName="userName" type="text" class="w-full border border-gray-300 rounded-xl p-2.5" placeholder="Your name" />
+                <div *ngIf="f.userName.touched && f.userName.invalid">
+                  <small class="text-red-600">Name is required.</small>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-medium mb-1">Email</label>
+                <input formControlName="userEmail" type="email" class="w-full border border-gray-300 rounded-xl p-2.5" placeholder="you@example.com" />
+                <div *ngIf="f.userEmail.touched && f.userEmail.invalid">
+                  <small class="text-red-600">Email is invalid.</small>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-medium mb-1">Workspace type</label>
+                <select formControlName="workspaceTypeId" *ngIf="workspaceTypes$ | async as workspaceTypes" class="w-full border border-gray-300 rounded-xl p-2.5">
+                  <option *ngFor="let type of workspaceTypes" [value]="type.id">{{ type.name }}</option>
+                </select>
+                <div *ngIf="f.workspaceTypeId.touched && f.workspaceTypeId.value === 0">
+                  <small class="text-red-600">Choose a workspace type.</small>
+                </div>
+              </div>
+
+              <div *ngIf="workspaces$ | async as workspaces">
+                <label class="block font-medium mb-2">What room size do you need?</label>
+                <div class="space-y-2">
+                  <div *ngFor="let workspace of workspaces">
+                    <input type="radio" [value]="workspace.capacity" formControlName="capacity" class="mr-2" />
+                    <label>Room for {{ workspace.capacity }} {{ workspace.capacity > 1 ? 'people' : 'person' }}</label>
+                  </div>
+                </div>
+                <div *ngIf="f.capacity.touched && f.capacity.value === 0">
+                  <small class="text-red-600">Choose a workspace.</small>
+               </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-semibold mb-6">Choose date and time</h2>
+            
+            <div class="space-y-4">
+
+            <div>
+              <label class="block font-medium mb-1">Start Date</label>
+              <input #startDateInput type="text" formControlName="startDate" class="w-full border border-gray-300 rounded-xl p-2.5">
+              <div *ngIf="f.startDate.touched && f.startDate.invalid">
+                <small class="text-red-600">Start date is required.</small>
+              </div>
+              <div *ngIf="bookingForm.errors?.pastDate">
+                <small class="text-red-600">Start date cannot be in the past.</small>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-medium mb-1">End Date</label>
+              <input #endDateInput type="text" formControlName="endDate" class="w-full border border-gray-300 rounded-xl p-2.5">
+              <div *ngIf="f.endDate.touched && f.endDate.invalid">
+                <small class="text-red-600">End date is required.</small>
+              </div>
+              <div *ngIf="bookingForm.errors?.dateOrderInvalid">
+                <small class="text-red-600">Start date must be before end date.</small>
+              </div>
+              <div *ngIf="bookingForm.errors?.durationExceeded">
+                <small class="text-red-600">{{ bookingForm.errors?.durationExceeded }}</small>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-medium mb-1">Start Time</label>
+              <input #startTimeInput type="text" formControlName="startTime" class="w-full border border-gray-300 rounded-xl p-2.5">
+               <div *ngIf="f.startTime.touched && f.startTime.invalid">
+                <small class="text-red-600">Start time is required.</small>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-medium mb-1">End Time</label>
+              <input #endTimeInput type="text" formControlName="endTime" class="w-full border border-gray-300 rounded-xl p-2.5">
+              <div *ngIf="f.endTime.touched && f.endTime.invalid">
+                <small class="text-red-600">End time is required.</small>
+              </div>
+              <div *ngIf="bookingForm.errors?.timeOrderInvalid">
+                <small class="text-red-600">End time must be after start time.</small>
+              </div>
+            </div>
+              
+              <button type = "submit" class="w-full bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition">
+                Submit
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

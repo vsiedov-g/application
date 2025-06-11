@@ -12,7 +12,7 @@ namespace application.AutoMapperProfiles
             CreateMap<BookingRequest, Booking>();
 
             CreateMap<Booking, BookingResponce>().ForMember(
-                dest => dest.WorkspaceType, src => src.MapFrom(x => x.Workspace.WorkspaceType.Name))
+                dest => dest.WorkspaceType, src => src.MapFrom(x => x.Workspace.WorkspaceType))
                 .ForMember(
                 dest => dest.Capacity, src => src.MapFrom(x => x.Workspace.Capacity));
         }

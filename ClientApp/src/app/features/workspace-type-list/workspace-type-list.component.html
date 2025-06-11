@@ -1,1 +1,3 @@
-<p>workspace-type-list works!</p>
+<div class="p-6 flex flex-wrap justify-center gap-6" *ngIf="workspaceTypesWithBooking$ | async as items">
+  <app-workspace-type-item *ngFor="let item of items" [workspaceType]="item.workspaceType" [booking]="item.booking"/>
+</div>
