@@ -33,5 +33,4 @@ appsettings.Development.json
 appsettings.json
 appsettings.Production.json
 
-Migrations/
 ClientApp/.editorconfig
