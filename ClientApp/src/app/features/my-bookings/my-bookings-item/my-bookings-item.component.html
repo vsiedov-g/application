@@ -1,15 +1,19 @@
- <div class="bg-white p-4 rounded-lg shadow-md flex items-start">
-      <img [src]="booking.workspaceType.imageUrl" [alt]="" class="w-60 rounded-md mr-4">
+ <div class="bg-white p-4 rounded-lg shadow-lg flex gap-5">
+      <div class="flex justify-center w-56 h-32">
+          <img 
+          class="rounded-lg w-full h-full object-cover"
+          [src]="booking.workspaceType.imageUrl" [alt]="booking.workspaceType.name">
+      </div>
       <div class="flex-1">
         <h2 class="text-xl font-semibold">{{ booking.workspaceType.name }} for {{booking.capacity}} {{booking.capacity > 1 ? 'people' : 'person'}}</h2>
         <p class="text-gray-600">{{ booking.startDate | date: "mediumDate"}} - {{booking.endDate | date:'mediumDate'}}</p>
         <p class="text-gray-600">{{ dummyDate + booking.startTime | date:'shortTime' }} - {{ dummyDate +  booking.endTime | date:'shortTime' }}</p>
       </div>
       <div class="items-center space-x-2">
-        <button (click)="onEditBooking()" class="w-16 p-2 bg-blue-500 text-white rounded-md">
+        <button (click)="onEditBooking()" class="w-16 p-2 bg-blue-600 hover:bg-blue-700 transition text-white rounded-md">
           Edit
         </button>
-        <button (click)="onDeleteBooking()" class="w-16 p-2 bg-red-500 text-white rounded-md">
+        <button (click)="onDeleteBooking()" class="w-16 p-2 bg-red-600 hover:bg-red-700 transition text-white rounded-md">
           Delete
         </button>
       </div>

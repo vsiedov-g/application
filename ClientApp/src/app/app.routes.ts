@@ -18,7 +18,7 @@ export const routes: Routes = [
         component: MyBookingsComponent
     },
     {
-        path: 'booking',
+        path: 'coworking/:id/booking',
         component: BookingPageComponent,
     },
     {

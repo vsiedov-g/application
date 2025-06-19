@@ -1,10 +1,10 @@
-<div class="flex w-1/5 flex-col gap-2">
-    <div class="flex justify-center w-48 h-32">
+<div class="flex w-1/5 flex-col">
+    <div class="flex justify-center w-56 h-32">
         <img 
         class="rounded-lg w-full h-full object-cover"
-        src="https://www.mindspace.me/wp-content/uploads/2023/08/Screenshot-2023-08-17-at-08.57.35.png" alt="">
+        [src]="coworking.imageUrl" alt="coworking.name">
     </div>
-    </div>
+</div>
     <div class="flex flex-col flex-1 gap-2">
     <div class="">
         <h1 class="text-xl font-bold">{{coworking.name}}</h1>
@@ -14,13 +14,17 @@
     </div>
     <div class="flex flex-1 justify-between">
         <div class="flex flex-col">
-            <div class="font-semibold">{{coworking.address}}</div>
+            <div>{{coworking.address}}</div>
         </div>
     </div>
     <div class="flex gap-1">
-        <div class="font-semibold" 
+        <div  
         *ngFor="let availability of coworking.availability">
             {{formatAvailability(availability.workspaceCount, availability.workspaceType)}}
+        </div>
+        <div class="text-red-500" 
+        *ngIf="coworking.availability.length === 0">
+            No available workspaces!
         </div>
     </div>
     </div>
@@ -28,7 +32,7 @@
     <div>
         <button
         [routerLink]="['/coworking', coworking.id, 'workspaces']" 
-        class="rounded font-semibold text-white bg-blue-700 py-2 px-5">
+        class="rounded font-semibold text-white bg-blue-600 hover:bg-blue-700 transition py-2 px-5">
             View details
         </button>
     </div>

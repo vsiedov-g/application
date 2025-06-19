@@ -1,5 +1,8 @@
-<div class="container mx-auto max-w-5xl p-4">
-  <div class="flex flex-col gap-6">
+<div class="container mx-auto max-w-6xl p-4">
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col mb-2">
+      <h5 class="text-3xl font-bold">Available coworking spaces</h5>
+    </div>
     <app-coworking-item 
     *ngFor="let coworking of coworkings$ | async"
     [coworking]="coworking"

@@ -1,3 +1,25 @@
-<div class="p-6 flex flex-wrap justify-center gap-6" *ngIf="workspaceTypesWithBooking$ | async as items">
-  <app-workspace-type-item *ngFor="let item of items" [workspaceType]="item.workspaceType" [booking]="item.booking"/>
+<div class="container mx-auto max-w-6xl p-4">
+  <div class="flex flex-col mb-2">
+    <h5 class="text-3xl font-bold">Available workspaces</h5>
+  </div>
+  <div class="p-6 flex flex-wrap justify-center gap-6" *ngIf="workspaceTypesWithBooking$ | async as items">
+    <ng-container *ngIf="items.length === 0">
+      <div class="flex flex-col gap-5 rounded-3xl shadow-lg items-center p-10 justify-center w-full min-h-[60vh] bg-white">
+          <div class="text-3xl text-center font-bold">
+            No coworking spaces available at the moment
+          </div>
+          <div class="text-l text-center text-gray-600 max-w-xl">
+            Please check back later
+          </div>
+          <div class="bg-blue-700 rounded-lg p-2">
+            <button routerLink="" class="text-white font-bold">Back to home page</button>
+          </div>
+        </div>
+    </ng-container>
+    <app-workspace-type-item 
+    *ngFor="let item of items"
+    [coworkingId]="coworkingId" 
+    [workspaceType]="item.workspaceType" 
+    [booking]="item.booking"/>
+  </div>
 </div>

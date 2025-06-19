@@ -19,6 +19,9 @@ export class CoworkingItemComponent {
   }
 
   formatAvailability(count: number, workspaceType: string): string{
+    if(!count && !workspaceType){
+      return "No available workspaces";
+    }
     if(workspaceType === WORKSPACE_TYPE_NAME.OPEN_SPACE){
       return `🪑 ${count} desk${count !== 1 ? 's' : ''}`;
     } 
@@ -28,6 +31,6 @@ export class CoworkingItemComponent {
     if(workspaceType === WORKSPACE_TYPE_NAME.MEETING_ROOM){
       return `📊 ${count} meeting room${count !== 1 ? 's' : ''}`;
     }
-    return "No available worspaceces";
+    return 'No available workspaces';
   }
 }
