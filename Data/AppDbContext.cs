@@ -24,6 +24,7 @@ namespace application.Data
                 {
                     Id = 1,
                     Name = "WorkClub Perchersk",
+                    Description = "Modern coworking in the heart of Pechersk with quiet rooms and coffee on tap",
                     Address = "123 Yaroslav Val St,Kyiv"
                 }
             );
