@@ -29,7 +29,7 @@ namespace application.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var bookings = await _unitOfWork.Booking.GetAllAsync(includeProperties: "Workspace.WorkspaceType");
+            var bookings = await _unitOfWork.Booking.GetAllAsync(includeProperties: "Workspace.WorkspaceType.CoworkingSpace");
             if(bookings == null)
             {
                 return NotFound();

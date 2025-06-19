@@ -10,6 +10,7 @@ namespace application.Repositories
     {
         private readonly AppDbContext _db;
 
+        public IRepository<Coworking> Coworking { get; private set; }
         public IRepository<Booking> Booking { get; private set; }
         public IRepository<Workspace> Workspace { get; private set; }
         public IRepository<WorkspaceType> WorkspaceType { get; private set; }
@@ -18,6 +19,7 @@ namespace application.Repositories
         public UnitOfWork(AppDbContext db)
         {
             _db = db;
+            Coworking = new Repository<Coworking>(_db);
             Booking = new Repository<Booking>(_db);
             Workspace = new Repository<Workspace>(_db);
             WorkspaceType = new Repository<WorkspaceType>(_db);

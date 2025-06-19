@@ -14,7 +14,9 @@ namespace application.AutoMapperProfiles
             CreateMap<Booking, BookingResponce>().ForMember(
                 dest => dest.WorkspaceType, src => src.MapFrom(x => x.Workspace.WorkspaceType))
                 .ForMember(
-                dest => dest.Capacity, src => src.MapFrom(x => x.Workspace.Capacity));
+                dest => dest.Capacity, src => src.MapFrom(x => x.Workspace.Capacity))
+                .ForMember(
+                dest => dest.CoworkingSpace, src => src.MapFrom(x => x.Workspace.WorkspaceType.CoworkingSpace.Name));
         }
     }
 }

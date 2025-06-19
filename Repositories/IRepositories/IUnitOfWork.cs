@@ -6,6 +6,7 @@ namespace application.Repositories.IRepositories
 {
     public interface IUnitOfWork
     {
+        IRepository<Coworking> Coworking { get; }
         IRepository<Booking> Booking { get; }
         IRepository<Workspace> Workspace { get; }
         IRepository<WorkspaceType> WorkspaceType { get; }
