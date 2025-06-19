@@ -1,0 +1,37 @@
+<div class="flex w-1/5 flex-col gap-2">
+    <div class="flex justify-center w-48 h-32">
+        <img 
+        class="rounded-lg w-full h-full object-cover"
+        src="https://www.mindspace.me/wp-content/uploads/2023/08/Screenshot-2023-08-17-at-08.57.35.png" alt="">
+    </div>
+    </div>
+    <div class="flex flex-col flex-1 gap-2">
+    <div class="">
+        <h1 class="text-xl font-bold">{{coworking.name}}</h1>
+    </div>
+    <div>
+        <p class="text-gray-400">{{coworking.description}}</p>
+    </div>
+    <div class="flex flex-1 justify-between">
+        <div class="flex flex-col">
+            <div class="font-semibold">{{coworking.address}}</div>
+        </div>
+    </div>
+    <div class="flex gap-1">
+        <div class="font-semibold" 
+        *ngFor="let availability of coworking.availability">
+            {{formatAvailability(availability.workspaceCount, availability.workspaceType)}}
+        </div>
+    </div>
+    </div>
+    <div class="flex justify-center">
+    <div>
+        <button
+        [routerLink]="['/coworking', coworking.id, 'workspaces']" 
+        class="rounded font-semibold text-white bg-blue-700 py-2 px-5">
+            View details
+        </button>
+    </div>
+</div>
+    
+
