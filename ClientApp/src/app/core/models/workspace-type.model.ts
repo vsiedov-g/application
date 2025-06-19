@@ -7,6 +7,13 @@ export class WorkspaceType{
         public description: string,
         public imageUrl: string,
         public amenities: string[],
-        public workspaces: Workspace[]
+        public availability: CoworkingAvailability[]
+    ){}
+}
+
+class CoworkingAvailability{
+    constructor(
+        public capacity: number, 
+        public workspaceCount: number
     ){}
 }
