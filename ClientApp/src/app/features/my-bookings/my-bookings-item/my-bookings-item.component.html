@@ -5,7 +5,7 @@
           [src]="booking.workspaceType.imageUrl" [alt]="booking.workspaceType.name">
       </div>
       <div class="flex-1">
-        <h2 class="text-xl font-semibold">{{ booking.workspaceType.name }} for {{booking.capacity}} {{booking.capacity > 1 ? 'people' : 'person'}}</h2>
+        <h2 class="text-xl font-semibold">{{ booking.workspaceType.name }} for {{booking.capacity}} {{booking.capacity > 1 ? 'people' : 'person'}} at {{booking.coworking}}</h2>
         <p class="text-gray-600">{{ booking.startDate | date: "mediumDate"}} - {{booking.endDate | date:'mediumDate'}}</p>
         <p class="text-gray-600">{{ dummyDate + booking.startTime | date:'shortTime' }} - {{ dummyDate +  booking.endTime | date:'shortTime' }}</p>
       </div>

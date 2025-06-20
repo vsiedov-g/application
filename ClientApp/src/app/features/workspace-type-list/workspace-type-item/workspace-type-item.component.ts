@@ -22,10 +22,6 @@ export class WorkspaceTypeItemComponent {
   capacityOptions: Workspace[];
   groupedAvailability: { capacity: number; count: number }[] = [];
   deskCount: number;
-  ngOnInit()
-  {
-    console.log(this.workspaceType)
-  }
 
   formatAvailability(count: number, capacity: number): string{
     if(this.workspaceType.name === WORKSPACE_TYPE_NAME.OPEN_SPACE){

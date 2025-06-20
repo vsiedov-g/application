@@ -1,6 +1,4 @@
 import { WorkspaceType } from "./workspace-type.model";
-import { Workspace } from "./workspace.model";
-
 export class BookingRequest{
     constructor(
         public id: number, 
@@ -11,7 +9,8 @@ export class BookingRequest{
         public endDate: string,
         public startTime: string,
         public endTime: string,
-        public workspaceTypeId: number
+        public workspaceTypeId: number,
+        public coworkingId: number,
     ){}
 }
 
@@ -25,6 +24,8 @@ export class BookingResponse{
         public endDate: string,
         public startTime: string,
         public endTime: string,
-        public workspaceType: WorkspaceType
+        public workspaceType: WorkspaceType,
+        public coworkingId: number,
+        public coworking: string,
     ){}
 }

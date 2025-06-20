@@ -9,6 +9,9 @@ import { WorkspaceType } from "../models/workspace-type.model";
 @Injectable({providedIn: 'root'})
 export class CoworkingService {
     private http = inject(HttpClient)
+    get(coworkingId: number){
+        return this.http.get<Coworking>(`${API_ENDPOINTS.COWORKING}/${coworkingId}`);
+    }
     getAll(){
         return this.http.get<Coworking[]>(API_ENDPOINTS.COWORKING);
     }

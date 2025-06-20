@@ -34,18 +34,18 @@ namespace application.Controllers
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<IEnumerable<BookingResponce>>(bookings));
+            return Ok(_mapper.Map<IEnumerable<BookingResponse>>(bookings));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var booking = await _unitOfWork.Booking.GetAsync(u => id == u.Id, includeProperties: "Workspace.WorkspaceType");
+            var booking = await _unitOfWork.Booking.GetAsync(u => id == u.Id, includeProperties: "Workspace.WorkspaceType.CoworkingSpace");
             if(booking == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<BookingResponce>(booking));
+            return Ok(_mapper.Map<BookingResponse>(booking));
         }
 
         [HttpPost]

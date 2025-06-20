@@ -13,10 +13,6 @@ import { Coworking } from 'src/app/core/models/coworking.model';
 })
 export class CoworkingItemComponent {
   @Input() coworking: Coworking
-  ngOnInit()
-  {
-    console.log(this.coworking);
-  }
 
   formatAvailability(count: number, workspaceType: string): string{
     if(!count && !workspaceType){

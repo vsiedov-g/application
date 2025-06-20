@@ -11,6 +11,7 @@ namespace application.Models.DTO
         [Required]
         [EmailAddress]
         public required string UserEmail { get; set; }
+        [Range(1, int.MaxValue)]
         public int Capacity { get; set; }
         [Required]
         public DateOnly StartDate { get; set; }

@@ -12,6 +12,8 @@ import { WorkspaceService } from 'src/app/core/services/workspace.service';
 import flatpickr from 'flatpickr';
 import { bookingDateValidator } from 'src/app/core/validators/booking-date.validators';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { Coworking } from 'src/app/core/models/coworking.model';
+import { CoworkingService } from 'src/app/core/services/coworkings.service';
 
 
 @Component({
@@ -29,7 +31,7 @@ export class BookingPageComponent {
   @ViewChild('startTimeInput') startTimeInput!: ElementRef;
   @ViewChild('endTimeInput') endTimeInput!: ElementRef;
 
-  private workspacetypeService = inject(WorkspaceTypeService);
+  private coworkingService = inject(CoworkingService);
   private workspaceService = inject(WorkspaceService);
   private bookingService = inject(BookingService);
   private fb = inject(FormBuilder);
@@ -39,6 +41,7 @@ export class BookingPageComponent {
   workspaceTypes$: Observable<WorkspaceType[]>;
   workspaces$: Observable<Workspace[]>
   booking$: Observable<BookingResponse>
+  coworkingId: number;
   bookingForm = this.fb.group({
       id: [0],
       userName: ['', Validators.required],
@@ -52,8 +55,9 @@ export class BookingPageComponent {
     }, {validators: bookingDateValidator});
 
   ngOnInit(){
+    this.coworkingId = this.route.snapshot.params['coworkingId'];
     this.booking$ = this.route.paramMap.pipe(
-      map(params => params.get('id')),
+      map(params => params.get('bookingId')),
       switchMap(id => id ? this.bookingService.getById(+id) : of(null)),
       tap(booking => {
         if (booking) this.bookingForm.patchValue({
@@ -67,11 +71,14 @@ export class BookingPageComponent {
           startTime: booking.startTime ? booking.startTime.slice(0, 5) : '',
           endTime: booking.endTime ? booking.endTime.slice(0, 5) : ''
         });
-
+        if(booking){
+          this.coworkingId = booking.coworkingId;
+          this.workspaceTypes$ = this.coworkingService.GetAllCoworkingWorkspaceTypes(this.coworkingId);
+        }
         setTimeout(() => this.initializeFlatpickr(), 0)
       })
     );
-    this.workspaceTypes$ = this.workspacetypeService.getAll();
+    
 
     this.workspaces$ = this.bookingForm.get('workspaceTypeId').valueChanges.pipe(
     switchMap((id: any) => this.workspaceService.getAll(id)),
@@ -92,6 +99,7 @@ export class BookingPageComponent {
       userName: this.bookingForm.value.userName,
       userEmail: this.bookingForm.value.userEmail,
       workspaceTypeId: this.bookingForm.value.workspaceTypeId,
+      coworkingId: this.coworkingId,
       capacity: this.bookingForm.value.capacity,
       startDate: this.bookingForm.value.startDate,
       endDate: this.bookingForm.value.endDate,

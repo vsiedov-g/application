@@ -3,6 +3,7 @@ import { MyBookingsComponent } from "./features/my-bookings/my-bookings.componen
 import { WorkspaceTypeListComponent } from "./features/workspace-type-list/workspace-type-list.component";
 import { BookingPageComponent } from "./features/booking-page/booking-page.component";
 import { CoworkingListComponent } from "./features/coworking-list/coworking-list.component";
+import { CoworkingBookingResolver } from "./core/resolvers/resolver";
 
 export const routes: Routes = [
     {
@@ -18,11 +19,14 @@ export const routes: Routes = [
         component: MyBookingsComponent
     },
     {
-        path: 'coworking/:id/booking',
+        path: 'coworking/:coworkingId/booking',
+        resolve: {
+            coworking: CoworkingBookingResolver
+        },
         component: BookingPageComponent,
     },
     {
-        path: 'booking/:id',
+        path: 'booking/:bookingId',
         component: BookingPageComponent,
     }
 ];

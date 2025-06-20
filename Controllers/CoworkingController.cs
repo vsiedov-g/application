@@ -26,5 +26,23 @@ namespace application.Controllers
             return Ok(_mapper.Map<IEnumerable<CoworkingDto>>(coworkings));
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var coworking = await _unitOfWork.Coworking.GetAsync(c => c.Id == id, includeProperties: "WorkspaceTypes.Workspaces");
+            if (coworking == null)
+            {
+                return NotFound("Coworking space not found");
+            }
+            return Ok(_mapper.Map<CoworkingDto>(coworking));
+        }
+
+        [HttpGet("{id}/workspaceTypes")]
+        public async Task<IActionResult> GetAllCoworkingWorkspaceTypes(int id)
+        {
+            var coworking = await _unitOfWork.Coworking.GetAsync(c => c.Id == id, includeProperties: "WorkspaceTypes.Workspaces,WorkspaceTypes.Amenities");
+            return Ok(_mapper.Map<IEnumerable<WorkspaceTypeDto>>(coworking.WorkspaceTypes));
+        }
+
     }
 }
