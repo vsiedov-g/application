@@ -15,20 +15,13 @@ services:
     build:
       context: .
     ports:
-      - "5258:8080" 
+      - "5258:5000" 
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - Groq__API_key=${GROQ_API_KEY}
     depends_on:
       - db
-
-  frontend:
-    build:
-      context: ./ClientApp
-    ports:
-      - "4200:80"
-    depends_on:
-      - api
 
 volumes:
   pgdata:
