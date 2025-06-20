@@ -1,4 +1,4 @@
-FROM node:18-alpine as nodebuild
+FROM node:18 as nodebuild
 WORKDIR /app
 COPY ClientApp ./ClientApp
 WORKDIR /app/ClientApp
@@ -13,7 +13,7 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-COPY --from=nodebuild /app/ClientApp/dist/ClientApp ./wwwroot
+COPY --from=nodebuild /app/ClientApp/dist ./wwwroot
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000
 ENTRYPOINT ["dotnet", "application.dll"]
