@@ -28,10 +28,10 @@ export class WorkspaceTypeItemComponent {
       return `${count} desk${count !== 1 ? 's' : ''} available`;
     } 
     if(this.workspaceType.name === WORKSPACE_TYPE_NAME.PRIVATE_ROOM){
-      return `${count} room${count !== 1 ? 's' : ''} for ${count !== 1 ? '' : 'up to'} ${capacity} ${capacity !== 1 ? 'people' : 'person'}`;
+      return `${count} room${count !== 1 ? 's' : ''} for ${count !== 1 ? 'up to' : ''} ${capacity} ${capacity !== 1 ? 'people' : 'person'}`;
     }
     if(this.workspaceType.name === WORKSPACE_TYPE_NAME.MEETING_ROOM){
-      return `${count} meeting room${count !== 1 ? 's' : ''}`;
+      return `${count} meeting room${count !== 1 ? 's' : ''} for up to ${capacity} people`;
     }
     return 'No available workspaces';
   }

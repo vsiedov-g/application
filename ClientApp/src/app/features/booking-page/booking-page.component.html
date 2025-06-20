@@ -6,7 +6,7 @@
       <h2 class="text-3xl font-bold mt-6 mb-10">Edit Booking </h2>
     </ng-container>
     <ng-template #createMode>
-      <a routerLink="/" class="text-blue-600 font-medium hover:underline">&larr; Go back</a>
+      <a [routerLink]="['/coworking', this.coworkingId, 'workspaces']" class="text-blue-600 font-medium hover:underline">&larr; Go back</a>
       <h2 class="text-3xl font-bold mt-6 mb-10">Create New Booking</h2>
     </ng-template>
 

@@ -23,4 +23,9 @@ export class BookingService {
     delete(Id: number){
         return this.http.delete(`${API_ENDPOINTS.BOOKING}/${Id}`);
     }
+    aiHelper(message: string){
+        let form = new FormData()
+        form.append('message', message)
+        return this.http.post<{response: string}>(API_ENDPOINTS.BOOKING_AI, form);
+    }
 }

@@ -34,3 +34,4 @@ appsettings.json
 appsettings.Production.json
 
 ClientApp/.editorconfig
+.env

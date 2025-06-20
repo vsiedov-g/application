@@ -73,8 +73,8 @@ export class BookingPageComponent {
         });
         if(booking){
           this.coworkingId = booking.coworkingId;
-          this.workspaceTypes$ = this.coworkingService.GetAllCoworkingWorkspaceTypes(this.coworkingId);
         }
+        this.workspaceTypes$ = this.coworkingService.GetAllCoworkingWorkspaceTypes(this.coworkingId);
         setTimeout(() => this.initializeFlatpickr(), 0)
       })
     );

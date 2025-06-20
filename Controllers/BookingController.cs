@@ -4,6 +4,7 @@ using application.Exceptions;
 using application.Models;
 using application.Models.DTO;
 using application.Repositories.IRepositories;
+using application.Services;
 using application.Services.IService;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -15,22 +16,24 @@ namespace application.Controllers
     [ApiController]
     public class BookingController : Controller
     {
-         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IBookingService _bookingService;
+        private readonly IAIHelperService _aIHelperService;
 
-        public BookingController(IUnitOfWork unitOfWork, IMapper mapper, IBookingService bookingService) 
+        public BookingController(IUnitOfWork unitOfWork, IMapper mapper, IBookingService bookingService, IAIHelperService aIHelperService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _bookingService = bookingService;
+            _aIHelperService = aIHelperService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var bookings = await _unitOfWork.Booking.GetAllAsync(includeProperties: "Workspace.WorkspaceType.CoworkingSpace");
-            if(bookings == null)
+            if (bookings == null)
             {
                 return NotFound();
             }
@@ -41,7 +44,7 @@ namespace application.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var booking = await _unitOfWork.Booking.GetAsync(u => id == u.Id, includeProperties: "Workspace.WorkspaceType.CoworkingSpace");
-            if(booking == null)
+            if (booking == null)
             {
                 return NotFound();
             }
@@ -51,9 +54,9 @@ namespace application.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromBody] BookingRequest req)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
+
             try
             {
                 Booking booking = await _bookingService.CreateBookingAsync(req);
@@ -68,7 +71,7 @@ namespace application.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateBooking([FromBody] BookingRequest req)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try
             {
@@ -89,13 +92,20 @@ namespace application.Controllers
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var booking = await _unitOfWork.Booking.GetAsync(u => id == u.Id);
-            if(booking == null)
+            if (booking == null)
             {
                 return NotFound();
             }
             _unitOfWork.Booking.Remove(booking);
             await _unitOfWork.SaveAsync();
             return Ok(booking.Id);
+        }
+
+        [HttpPost("ai")]
+        public async Task<IActionResult> AiHelper([FromForm]string message)
+        {
+            var response = await _aIHelperService.SendPrompt(message);
+            return Ok(new  {response = response});
         }
 
     }

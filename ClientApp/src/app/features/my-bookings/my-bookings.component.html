@@ -1,4 +1,4 @@
-<div class="p-6 min-h-screen">
+<div class="container flex flex-col mx-auto max-w-6xl max-h-full p-4">
   <div class="space-y-4" *ngIf="bookings$ | async as bookings">
     <ng-container *ngIf="bookings.length === 0; else bookingList">
       <div class="flex items-center justify-center min-h-[60vh]">
@@ -8,14 +8,44 @@
       </div>
     </ng-container>
     <ng-template #bookingList>
-      <div class="container mx-auto max-w-6xl p-4">
+      <div class="flex flex-col">
         <h1 class="text-2xl font-bold mb-4">My bookings on Green Coworking</h1>
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 overflow">
           <app-my-bookings-item
             *ngFor="let booking of bookings"
             [booking]="booking"
             (bookingDeleted)="onBookingDeleted()">
           </app-my-bookings-item>
+        </div>
+        <div class="flex flex-col gap-5 mt-5">
+          <h1 class="text-2xl font-bold">Ai assistant</h1>
+          <div 
+          *ngIf="this.aiResponse$ | async as ai" 
+          class="flex flex-col bg-white w-full p-4 border border-black rounded-lg">
+            <div class="text-xl font-bold" >
+              {{question}}
+            </div>
+            <div class="text-md p-4 rounded-lg">
+               <markdown [data]="ai.response"></markdown>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <div
+            (click)="sendMessageToAI(q)"
+            class="p-2 cursor-pointer bg-blue-100 hover:bg-blue-200 border-blue-600 border rounded text-sm text-blue-600" 
+            *ngFor="let q of exampleQuestions" >
+              {{q}}
+            </div>
+          </div>
+          <div>
+            <input
+            class="p-4 w-full rounded-lg outline-blue-600" 
+            type="text"
+            placeholder="Ask anything..."
+            [(ngModel)]="message"
+            (keyup.enter)="sendMessageToAI(this.message)"
+            >
+          </div>
         </div>
       </div>
     </ng-template>
